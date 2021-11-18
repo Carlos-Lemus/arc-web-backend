@@ -5,9 +5,14 @@ const express_validator_1 = require("express-validator");
 const users_1 = require("../controllers/users");
 const middlewares_1 = require("../middlewares");
 const router = (0, express_1.Router)();
-router.get('/', [], users_1.getUsers);
-router.get('/:id', [], users_1.getUser);
+router.get('/', [
+    middlewares_1.validateJwt,
+], users_1.getUsers);
+router.get('/:id', [
+    middlewares_1.validateJwt,
+], users_1.getUser);
 router.post('/', [
+    middlewares_1.validateJwt,
     (0, express_validator_1.check)('role')
         .not().isEmpty()
         .withMessage('El role es obligatorio'),
@@ -56,6 +61,7 @@ router.post('/', [
     middlewares_1.validateFields
 ], users_1.createUser);
 router.put('/:id', [
+    middlewares_1.validateJwt,
     (0, express_validator_1.check)('role')
         .not().isEmpty()
         .withMessage('El role es obligatorio'),
@@ -96,6 +102,8 @@ router.put('/:id', [
         .withMessage('El username debe ser un string'),
     middlewares_1.validateFields
 ], users_1.updateUser);
-router.delete('/:id', [], users_1.deleteUser);
+router.delete('/:id', [
+    middlewares_1.validateJwt,
+], users_1.deleteUser);
 exports.default = router;
 //# sourceMappingURL=users.js.map

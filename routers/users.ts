@@ -8,16 +8,20 @@ import {
     updateUser,
     deleteUser,
 } from '../controllers/users';
-import { validateFields } from "../middlewares";
+import { validateFields, validateJwt } from "../middlewares";
 
 const router = Router();
 
-router.get('/', [], getUsers)
+router.get('/', [
+    validateJwt,
+], getUsers)
 
 router.get('/:id', [
+    validateJwt,
 ], getUser)
 
 router.post('/', [
+    validateJwt,
     check('role')
         .not().isEmpty()
         .withMessage('El role es obligatorio'),
@@ -67,6 +71,7 @@ router.post('/', [
 ], createUser)
 
 router.put('/:id', [
+    validateJwt,
     check('role')
         .not().isEmpty()
         .withMessage('El role es obligatorio'),
@@ -109,6 +114,7 @@ router.put('/:id', [
 ], updateUser)
 
 router.delete('/:id', [
+    validateJwt,
 ], deleteUser)
 
 export default router;

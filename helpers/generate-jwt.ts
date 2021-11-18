@@ -1,7 +1,5 @@
 import jwt from 'jsonwebtoken';
 
-const salt: number = 10;
-
 export const generateJwt = (payload: any) =>  new Promise((resolve, reject) => {
         
     const secretKey:string = process.env.SECRET_KEY!;
@@ -9,7 +7,7 @@ export const generateJwt = (payload: any) =>  new Promise((resolve, reject) => {
     jwt.sign({
         data: payload,
     }, secretKey, {
-        expiresIn: '10h'
+        expiresIn: '10h',
     }, (error, token) => {
         if(error) {
             console.log(error)

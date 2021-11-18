@@ -5,13 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateJwt = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const salt = 10;
 const generateJwt = (payload) => new Promise((resolve, reject) => {
     const secretKey = process.env.SECRET_KEY;
     jsonwebtoken_1.default.sign({
         data: payload,
     }, secretKey, {
-        expiresIn: '10h'
+        expiresIn: '10h',
     }, (error, token) => {
         if (error) {
             console.log(error);
