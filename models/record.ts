@@ -29,7 +29,7 @@ const schema = new Schema<Record>({
 schema.methods.toJSON = function () {
     const { _id: id, dateFull, __v, ...props } = this.toObject();
 
-    const dateArray = dateFull.toLocaleString().slice(0, 19).replace("T", " ").split(' ');
+    const dateArray = dateFull.toISOString().slice(0, 19).replace("T", " ").split(' ');
 
     return {
         ...props,
