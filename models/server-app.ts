@@ -4,9 +4,9 @@ import { createServer } from 'http';
 import cors from 'cors';
 import SerialPort from 'serialport';
 
-import controllerSocket from '../sockets/controller';
 import { connection } from '../db/connection';
 import { auth, records, roles, users } from '../routers';
+import dbAddRecord from '../helpers/db-add-record';
 export default class ServerApp {
 
     // Server App
@@ -63,7 +63,12 @@ export default class ServerApp {
     }
 
     private sockets(): void {
-        this.socketio.on('connect', (sockets: Socket) => controllerSocket(sockets, this.parser));
+        
+        this.parser.on('data', async (data) => {
+            const record = await dbAddRecord(data);
+
+            this.socketio.emit('/socket/sendTemp', record);
+        });
     }
 
     public listen(): void {
