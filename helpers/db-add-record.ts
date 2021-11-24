@@ -16,7 +16,7 @@ const dbAddRecord = async (data: string) => {
             number: parseInt(dataArray[1]),
             dateFull,
             temperature,
-            result: temperature >= 38 ? 'Alta' : 'Normal',
+            result: temperature > 37 ? 'Alta' : 'Normal',
         });
 
 

@@ -25,7 +25,7 @@ class ServerApp {
         this.port = process.env.PORT || '4000';
         this.app = (0, express_1.default)();
         this.server = (0, http_1.createServer)(this.app);
-        this.socketio = new socket_io_1.Server(this.server, {
+        this.io = new socket_io_1.Server(this.server, {
             cors: {
                 origin: ['http://localhost:8080'],
             }
@@ -64,7 +64,7 @@ class ServerApp {
     sockets() {
         this.parser.on('data', (data) => __awaiter(this, void 0, void 0, function* () {
             const record = yield (0, db_add_record_1.default)(data);
-            this.socketio.emit('/socket/sendTemp', record);
+            this.io.emit('/socket/sendTemp', record);
         }));
     }
     listen() {

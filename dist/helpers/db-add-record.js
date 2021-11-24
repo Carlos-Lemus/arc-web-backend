@@ -20,7 +20,7 @@ const dbAddRecord = (data) => __awaiter(void 0, void 0, void 0, function* () {
             number: parseInt(dataArray[1]),
             dateFull,
             temperature,
-            result: temperature >= 38 ? 'Alta' : 'Normal',
+            result: temperature > 37 ? 'Alta' : 'Normal',
         });
         yield record.save();
         return record;

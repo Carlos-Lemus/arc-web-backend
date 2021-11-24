@@ -1,5 +1,5 @@
 import express from 'express';
-import { Server, Socket } from 'socket.io';
+import { Server } from 'socket.io';
 import { createServer } from 'http';
 import cors from 'cors';
 import SerialPort from 'serialport';
@@ -13,7 +13,7 @@ export default class ServerApp {
     private port: string = process.env.PORT || '4000';
     private app: express.Application = express();
     private server = createServer(this.app);
-    private socketio: Server = new Server(this.server, {
+    private io: Server = new Server(this.server, {
         cors: {
             origin: ['http://localhost:8080'],
         }
@@ -67,7 +67,7 @@ export default class ServerApp {
         this.parser.on('data', async (data) => {
             const record = await dbAddRecord(data);
 
-            this.socketio.emit('/socket/sendTemp', record);
+            this.io.emit('/socket/sendTemp', record);
         });
     }
 
